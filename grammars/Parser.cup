@@ -4,72 +4,82 @@ import java.util.ArrayList;
 import java_cup.runtime.*;
 import ch.ffhs.srlang.skript.instr.*;
 
-terminal PLUS, MINUS, TIMES, DIV, MOD, POW;
-terminal ASSIGN, LPAR, RPAR, SEP;
+terminal String literalBoolean;	// (false\|true)
+terminal String literalInteger;	// [-+]{0,1}[0-9]+
+terminal String literalString;	// "[^"]{0,256}"
 
-terminal String NUMBER;
-terminal String NAME;
+terminal kwAdd;	// \+
+terminal kwAssign;	// :=
+terminal kwCompare;	// ==
+terminal kwCurlyClose;	// \}
+terminal kwCurlyOpen;	// \{
+terminal kwDiv;	// \/
+terminal kwList;	// ,
+terminal kwMul;	// \*
+terminal kwRoundClose;	// \)
+terminal kwRoundOpen;	// \(
+terminal kwSub;	// -
+
+terminal kwEnd;	// ;
+terminal kwElse;	// el
+terminal kwFunction;	// fn
+terminal kwIf;	// if
+terminal kwLoop;	// lp
+terminal kwReturn;	// ret
+terminal comment;	// \/\/[\n]*
+terminal String identifier;	// [a-zA-z][a-zA-Z0-9]{0,255}
 
 non terminal Instruction SCRIPT;
 non terminal ArrayList<Instruction> ASSIGNMENT_LIST;
 non terminal Instruction ASSIGNMENT;
-non terminal Instruction SUM, PRODUCT, POWER, SIMPLE_TERM;
+non terminal Instruction SUM, PRODUCT, SIMPLE_TERM;
 non terminal ENDE;
 
 start with SCRIPT;
-      
-SCRIPT ::= ASSIGNMENT_LIST:al SUM:s ENDE
-                         {: RESULT = new InstructionScript(al, s); :}
-                      ;
-               
-ASSIGNMENT_LIST ::=
-                   {:  RESULT = new ArrayList<Instruction>(); :}
-                |  ASSIGNMENT_LIST:al ASSIGNMENT:a 
-                   {:  RESULT = al;
-                       RESULT.add(a); 
-                   :}
-                ;
-                
-ENDE ::= 
-     |  SEP
-     ;
 
-ASSIGNMENT ::= NAME:n ASSIGN SUM:s SEP
-                {: RESULT = new InstructionSetVariable(n, s); :}
-              ;
-           
-       
+SCRIPT ::= ASSIGNMENT_LIST:al SUM:s ENDE
+                        {: RESULT = new InstructionScript(al, s); :}
+                     ;
+
+ASSIGNMENT_LIST ::=
+                  {:  RESULT = new ArrayList<Instruction>(); :}
+               |  ASSIGNMENT_LIST:al ASSIGNMENT:a
+                  {:  RESULT = al;
+                      RESULT.add(a);
+                  :}
+               ;
+
+ENDE ::=
+    |  kwEnd
+    ;
+
+ASSIGNMENT ::= identifier:n kwAssign SUM:s kwEnd
+               {: RESULT = new InstructionSetVariable(n, s); :}
+             ;
+
+
 SUM ::= PRODUCT:p
-        {: RESULT = p; :}
-     |  MINUS PRODUCT:p
-        {: RESULT = new InstructionNegate(p); :}
-     |  SUM:s PLUS PRODUCT:p
-        {: RESULT = new InstructionBinaryOperation(BinaryOperator.PLUS, s, p); :}
-     |  SUM:s MINUS PRODUCT:p
-        {: RESULT = new InstructionBinaryOperation(BinaryOperator.MINUS, s, p); :}
-     ;
-     
-PRODUCT ::= POWER:pp
-            {: RESULT = pp; :}
-         |  PRODUCT:p TIMES POWER:pp
-            {: RESULT = new InstructionBinaryOperation(BinaryOperator.TIMES, p, pp); :}
-         |  PRODUCT:p DIV POWER:pp
-            {: RESULT = new InstructionBinaryOperation(BinaryOperator.DIV, p, pp); :}
-         |  PRODUCT:p MOD POWER:pp
-            {: RESULT = new InstructionBinaryOperation(BinaryOperator.MOD, p, pp); :}
-         ;
-                    
-POWER ::= SIMPLE_TERM:st
-          {: RESULT = st; :}
-        | SIMPLE_TERM:st POW POWER:pp
-          {: RESULT = new InstructionBinaryOperation(BinaryOperator.POW, st, pp); :}
+       {: RESULT = p; :}
+    |  kwSub PRODUCT:p
+       {: RESULT = new InstructionNegate(p); :}
+    |  SUM:s kwAdd PRODUCT:p
+       {: RESULT = new InstructionBinaryOperation(BinaryOperator.PLUS, s, p); :}
+    |  SUM:s kwSub PRODUCT:p
+       {: RESULT = new InstructionBinaryOperation(BinaryOperator.MINUS, s, p); :}
+    ;
+
+PRODUCT ::= SIMPLE_TERM:st
+           {: RESULT = st; :}
+        |  PRODUCT:p kwMul SIMPLE_TERM:st
+           {: RESULT = new InstructionBinaryOperation(BinaryOperator.TIMES, p, st); :}
+        |  PRODUCT:p kwDiv SIMPLE_TERM:st
+           {: RESULT = new InstructionBinaryOperation(BinaryOperator.DIV, p, st); :}
         ;
-        
-SIMPLE_TERM ::= NAME:n
-                {: RESULT = new InstructionGetVariable(n); :}
-             |  NUMBER:n
-                {: RESULT = InstructionConstant.integer(n); :}
-             |  LPAR SUM:s RPAR
-                {: RESULT = s; :}
-             ;    
-   
+
+SIMPLE_TERM ::= identifier:n
+               {: RESULT = new InstructionGetVariable(n); :}
+            |  literalInteger:n
+               {: RESULT = InstructionConstant.integer(n); :}
+            |  kwRoundOpen SUM:s kwRoundClose
+               {: RESULT = s; :}
+            ;

@@ -28,30 +28,24 @@ import static ch.ffhs.srlang.skript.parser.Terminals.*;
    
 %}
 
-OPT_SPACE = [ \t]+
-BREAK     = [\n\r]+
-COMMENT   = "//".*
 %%
 
-"+"     { return sym(PLUS); }
-"-"     { return sym(MINUS); }
-"*"     { return sym(TIMES); }
-"/"     { return sym(DIV); }
-"%"     { return sym(MOD); }
-"**"    { return sym(POW); }
-":="    { return sym(ASSIGN); }
-"("		{ return sym(LPAR); }
-")"		{ return sym(RPAR); }
+"+"     { return sym(kwAdd); }
+"-"     { return sym(kwSub); }
+"*"     { return sym(kwMul); }
+"/"     { return sym(kwDiv); }
+":="    { return sym(kwAssign); }
+"("		{ return sym(kwRoundOpen); }
+")"		{ return sym(kwRoundClose); }
 
-[0-9]+  { return symVal(NUMBER); }
-([:jletter:]|_)([:jletterdigit:]|_)*	{return symVal(NAME); }
+[0-9]+  { return symVal(literalInteger); }
+[a-zA-z][a-zA-Z0-9]{0,255} { return symVal(identifier); }
 
-{BREAK} { return sym(SEP); }
-{OPT_SPACE}	{ }
-{COMMENT}   { }	
+[\n\r]+ { return sym(kwEnd); }
+\/\/.*  { }
+[ \t]+ { }
 
-.		{ throw new RuntimeException("Illegal Symbol '" + yytext() + '\''
-             + " in line " + yyline + ", column" + yycolumn); } 
+.       { throw new RuntimeException("Illegal Symbol '" + yytext() + "' in line " + yyline + ", column " + yycolumn); }
 
 
 

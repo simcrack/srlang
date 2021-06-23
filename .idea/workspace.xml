@@ -3,6 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="66ba2b9f-fad7-438b-b594-e1dc2abdeade" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grammars/Parser.cup" beforeDir="false" afterPath="$PROJECT_DIR$/grammars/Parser.cup" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grammars/Scanner.flex" beforeDir="false" afterPath="$PROJECT_DIR$/grammars/Scanner.flex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Scanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Terminals.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Terminals.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,6 +16,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProblemsViewState">
     <hideBySeverity>
