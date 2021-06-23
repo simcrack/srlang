@@ -1,11 +1,9 @@
 package ch.ffhs.srlang.skript.instr;
 
-public enum BinaryOperator
-{
-    PLUS,
-    MINUS,
-    TIMES,
+public enum BinaryOperator {
+    ADD,
+    SUB,
+    MUL,
     DIV,
-    MOD,
-    POW
+    EQU
 }

@@ -35,14 +35,28 @@ import static ch.ffhs.srlang.skript.parser.Terminals.*;
 "*"     { return sym(kwMul); }
 "/"     { return sym(kwDiv); }
 ":="    { return sym(kwAssign); }
+"=="    { return sym(kwCompare); }
+
+
 "("		{ return sym(kwRoundOpen); }
 ")"		{ return sym(kwRoundClose); }
+"{"		{ return sym(kwCurlyOpen); }
+"}"		{ return sym(kwCurlyClose); }
 
+","     { return sym(kwList); }
+";"		{ return sym(kwEnd); }
+"el"    { return sym(kwElse); }
+"fn"    { return sym(kwFunction); }
+"if"    { return sym(kwIf); }
+"lp"    { return sym(kwLoop); }
+"ret"   { return sym(kwReturn); }
+"echo"  { return sym(kwEcho); }
+
+\/\/.*\n    { return sym(comment); }
 [0-9]+  { return symVal(literalInteger); }
 [a-zA-z][a-zA-Z0-9]{0,255} { return symVal(identifier); }
 
-[\n\r]+ { return sym(kwEnd); }
-\/\/.*  { }
+[\n\r]+ { }
 [ \t]+  { }
 
 .       { throw new RuntimeException("Illegal Symbol '" + yytext() + "' in line " + yyline + ", column " + yycolumn); }

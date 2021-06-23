@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java_cup.runtime.*;
 import ch.ffhs.srlang.skript.instr.*;
 
-terminal String literalBoolean;	// (false\|true)
 terminal String literalInteger;	// [-+]{0,1}[0-9]+
-terminal String literalString;	// "[^"]{0,256}"
 
 terminal kwAdd;	// \+
 terminal kwAssign;	// :=
@@ -26,60 +24,93 @@ terminal kwFunction;	// fn
 terminal kwIf;	// if
 terminal kwLoop;	// lp
 terminal kwReturn;	// ret
+terminal kwEcho; // echo
 terminal comment;	// \/\/[\n]*
 terminal String identifier;	// [a-zA-z][a-zA-Z0-9]{0,255}
 
-non terminal Instruction SCRIPT;
-non terminal ArrayList<Instruction> ASSIGNMENT_LIST;
-non terminal Instruction ASSIGNMENT;
-non terminal Instruction SUM, PRODUCT, SIMPLE_TERM;
-non terminal ENDE;
+
+non terminal String VARIABLE;
+non terminal Instr ARIT_EXPRESSION;
+non terminal InstrBinaryOperation ARIT_PROD, ARIT_SUM;
+non terminal InstrInstructions INSTRUCTIONS;
+non terminal Instr INSTRUCTION;
+non terminal InstrSetVariable VAR_ASSIGN;
+non terminal FUNCTIONNAME, FUNCTIONDEF, FUNCTIONCALL;
+non terminal InstrConditional CONDITIONAL;
+non terminal Instr BOOL_EXPRESSION;
+non terminal ARGUMENTDEF, ARGUMENTLIST;
+non terminal InstrEcho ECHO;
+non terminal LOOP;
+non terminal InstrScript SCRIPT;
+precedence left kwSub, kwAdd;
+precedence left kwMul, kwDiv;
 
 start with SCRIPT;
 
-SCRIPT ::= ASSIGNMENT_LIST:al SUM:s ENDE
-                        {: RESULT = new InstructionScript(al, s); :}
-                     ;
-
-ASSIGNMENT_LIST ::=
-                  {:  RESULT = new ArrayList<Instruction>(); :}
-               |  ASSIGNMENT_LIST:al ASSIGNMENT:a
-                  {:  RESULT = al;
-                      RESULT.add(a);
-                  :}
-               ;
-
-ENDE ::=
-    |  kwEnd
-    ;
-
-ASSIGNMENT ::= identifier:n kwAssign SUM:s kwEnd
-               {: RESULT = new InstructionSetVariable(n, s); :}
-             ;
-
-
-SUM ::= PRODUCT:p
-       {: RESULT = p; :}
-    |  kwSub PRODUCT:p
-       {: RESULT = new InstructionNegate(p); :}
-    |  SUM:s kwAdd PRODUCT:p
-       {: RESULT = new InstructionBinaryOperation(BinaryOperator.PLUS, s, p); :}
-    |  SUM:s kwSub PRODUCT:p
-       {: RESULT = new InstructionBinaryOperation(BinaryOperator.MINUS, s, p); :}
-    ;
-
-PRODUCT ::= SIMPLE_TERM:st
-           {: RESULT = st; :}
-        |  PRODUCT:p kwMul SIMPLE_TERM:st
-           {: RESULT = new InstructionBinaryOperation(BinaryOperator.TIMES, p, st); :}
-        |  PRODUCT:p kwDiv SIMPLE_TERM:st
-           {: RESULT = new InstructionBinaryOperation(BinaryOperator.DIV, p, st); :}
-        ;
-
-SIMPLE_TERM ::= identifier:n
-               {: RESULT = new InstructionGetVariable(n); :}
-            |  literalInteger:n
-               {: RESULT = InstructionConstant.integer(n); :}
-            |  kwRoundOpen SUM:s kwRoundClose
-               {: RESULT = s; :}
+SCRIPT          ::= INSTRUCTIONS:is
+                    {: RESULT = new InstrScript(is); :}
             ;
+INSTRUCTIONS	::=
+                    {:  RESULT = new InstrInstructions(); :}
+                | INSTRUCTIONS:is INSTRUCTION:i
+                    {:  RESULT = is;
+                        RESULT.addInstruction(i);
+                    :}
+			;
+INSTRUCTION     ::= VAR_ASSIGN:va
+                    {: RESULT = va; :}
+				| FUNCTIONDEF
+				| FUNCTIONCALL kwEnd
+				| kwCurlyOpen INSTRUCTIONS kwCurlyClose
+				| CONDITIONAL:c
+				    {: RESULT = c; :}
+				| LOOP
+				| ECHO:e
+				    {: RESULT = e; :}
+			;
+ECHO            ::= kwEcho ARIT_EXPRESSION:ae kwEnd
+                    {: RESULT = new InstrEcho(ae); :}
+            ;
+VARIABLE		::= identifier:i
+                    {: RESULT = i; :}
+			;
+VAR_ASSIGN	    ::= VARIABLE:v kwAssign ARIT_EXPRESSION:ae kwEnd
+                    {: RESULT = new InstrSetVariable(v, ae); :}
+			;
+ARIT_EXPRESSION ::= FUNCTIONCALL
+                | kwRoundOpen ARIT_EXPRESSION:ae kwRoundClose
+                    {: RESULT = ae; :}
+				| literalInteger:li
+				    {: RESULT = InstrConstant.integer(li); :}
+				| VARIABLE:v
+				    {: RESULT = new InstrGetVariable(v); :}
+				| ARIT_EXPRESSION:ael kwAdd ARIT_EXPRESSION:aer
+                    {: RESULT = new InstrBinaryOperation(BinaryOperator.ADD, ael, aer); :}
+                | ARIT_EXPRESSION:ael kwSub ARIT_EXPRESSION:aer
+                    {: RESULT = new InstrBinaryOperation(BinaryOperator.SUB, ael, aer); :}
+                | ARIT_EXPRESSION:ael kwMul ARIT_EXPRESSION:aer
+                    {: RESULT = new InstrBinaryOperation(BinaryOperator.MUL, ael, aer); :}
+				| ARIT_EXPRESSION:ael kwDiv ARIT_EXPRESSION:aer
+                    {: RESULT = new InstrBinaryOperation(BinaryOperator.DIV, ael, aer); :}
+            ;
+BOOL_EXPRESSION ::= ARIT_EXPRESSION:ael kwCompare ARIT_EXPRESSION:aer
+                    {: RESULT = new InstrBinaryOperation(BinaryOperator.EQU, ael, aer); :}
+            ;
+ARGUMENTDEF		::= VARIABLE
+				| ARGUMENTDEF kwList VARIABLE
+			;
+ARGUMENTLIST	::= ARIT_EXPRESSION
+				| ARGUMENTLIST kwList ARIT_EXPRESSION
+			;
+FUNCTIONNAME	::= identifier
+			;
+FUNCTIONCALL	::= FUNCTIONNAME kwRoundOpen ARGUMENTLIST kwRoundClose
+			;
+FUNCTIONDEF		::= kwFunction FUNCTIONNAME kwRoundOpen ARGUMENTDEF kwRoundClose kwCurlyOpen INSTRUCTIONS kwCurlyClose
+                | kwFunction FUNCTIONNAME kwRoundOpen ARGUMENTDEF kwRoundClose kwCurlyOpen INSTRUCTIONS kwReturn kwRoundOpen ARIT_EXPRESSION kwRoundClose kwEnd kwCurlyClose
+			;
+CONDITIONAL		::= kwIf kwRoundOpen BOOL_EXPRESSION:be kwRoundClose kwCurlyOpen INSTRUCTIONS:is kwCurlyClose
+                    {: RESULT = new InstrConditional(be, is); :}
+			;
+LOOP			::= kwLoop kwRoundOpen BOOL_EXPRESSION kwRoundClose kwCurlyOpen INSTRUCTIONS kwCurlyClose
+			;

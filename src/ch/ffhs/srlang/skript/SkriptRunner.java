@@ -1,16 +1,13 @@
 package ch.ffhs.srlang.skript;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import ch.ffhs.srlang.skript.instr.Evaluator;
-import ch.ffhs.srlang.skript.instr.Instruction;
-import ch.ffhs.srlang.skript.instr.Validator;
+import ch.ffhs.srlang.skript.instr.Executor;
+import ch.ffhs.srlang.skript.instr.Instr;
 import java_cup.runtime.Symbol;
 import ch.ffhs.srlang.skript.parser.Parser;
 import ch.ffhs.srlang.skript.parser.Scanner;
@@ -25,54 +22,21 @@ public class SkriptRunner
 {
     public static void main(String[] args)
     {
-        Map<String,BigInteger> context = new HashMap<>();
-        for (;;)
+        try
         {
-            try
-            {
-                StringBuilder sb = new StringBuilder();
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                for (;;)
-                {
-                    System.out.print("> ");
-                    String line = br.readLine();
-                    if (line.trim().length() == 0) break;
-                    sb.append(line);
-                    sb.append('\n');
-                }
-                String script = sb.toString();
-                if (script.trim().length() == 0)
-                {
-                    System.out.println("DONE");
-                    return;
-                }
-                Parser parser = new Parser(new Scanner(new StringReader(script)));
-                Symbol symbol = parser.parse();
-                Instruction instr = (Instruction) symbol.value;
-                Validator validator = new Validator();
-                instr.acceptVisitor(validator);
-                if (! validator.getUnusedVariables().isEmpty())
-                {
-                    System.out.println("Warning: Unused variables: " +
-                            setToString(validator.getUnusedVariables()));
-                }
-                if (! validator.getUndefinedVariables().isEmpty())
-                {
-                    System.out.println("Error: Undefined variables: " + 
-                            setToString(validator.getUndefinedVariables()));
-                }
-                else
-                {
-                    Evaluator evaluator = new Evaluator(context);
-                    BigInteger result = instr.acceptVisitor(evaluator);
-                    System.out.println("---> " + result);
-                }
-            }
-            catch (Exception ex)
-            {
-                //System.out.println(ex.getMessage());
-                ex.printStackTrace();
-            }
+            Map<String, BigInteger> context = new HashMap<>();
+            String script = "abc := 12;\necho (1 + abc) * 2;\necho abc * 2 + 1;if (1 == 1) { echo 1; }";
+            Parser parser = new Parser(new Scanner(new StringReader(script)));
+            Symbol symbol = parser.parse();
+            Instr instr = (Instr) symbol.value;
+
+            Executor executor = new Executor(context);
+            instr.acceptVisitor(executor);
+        }
+        catch (Exception ex)
+        {
+            //System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
     
