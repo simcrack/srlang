@@ -6,8 +6,7 @@ public class InstructionConstant extends Instruction
 {
     final Object value;
     
-    public static InstructionConstant integer(String str)
-    {
+    public static InstructionConstant integer(String str) {
         return new InstructionConstant(new BigInteger(str));
     }
     

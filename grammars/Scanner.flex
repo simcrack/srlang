@@ -43,7 +43,7 @@ import static ch.ffhs.srlang.skript.parser.Terminals.*;
 
 [\n\r]+ { return sym(kwEnd); }
 \/\/.*  { }
-[ \t]+ { }
+[ \t]+  { }
 
 .       { throw new RuntimeException("Illegal Symbol '" + yytext() + "' in line " + yyline + ", column " + yycolumn); }
 
