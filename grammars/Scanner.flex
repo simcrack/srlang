@@ -1,7 +1,7 @@
-package ch.ffhs.ti.umk.skript.parser;
+package ch.ffhs.srlang.skript.parser;
 
-import static ch.ffhs.ti.umk.skript.parser.Terminals.*;
 import java_cup.runtime.Symbol;
+import static ch.ffhs.srlang.skript.parser.Terminals.*;
 
 %%
 

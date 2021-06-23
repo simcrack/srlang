@@ -1,4 +1,4 @@
-package ch.ffhs.ti.umk.skript;
+package ch.ffhs.srlang.skript;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import ch.ffhs.srlang.skript.instr.Evaluator;
+import ch.ffhs.srlang.skript.instr.Instruction;
+import ch.ffhs.srlang.skript.instr.Validator;
 import java_cup.runtime.Symbol;
-import ch.ffhs.ti.umk.skript.instr.Evaluator;
-import ch.ffhs.ti.umk.skript.instr.Instruction;
-import ch.ffhs.ti.umk.skript.instr.Validator;
-import ch.ffhs.ti.umk.skript.parser.Parser;
-import ch.ffhs.ti.umk.skript.parser.Scanner;
+import ch.ffhs.srlang.skript.parser.Parser;
+import ch.ffhs.srlang.skript.parser.Scanner;
 
 /**
  * Interaktiver Interpreter als Konsonen-Applikation. 

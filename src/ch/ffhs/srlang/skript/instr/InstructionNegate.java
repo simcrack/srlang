@@ -1,4 +1,4 @@
-package ch.ffhs.ti.umk.skript.instr;
+package ch.ffhs.srlang.skript.instr;
 
 public class InstructionNegate extends Instruction
 {
