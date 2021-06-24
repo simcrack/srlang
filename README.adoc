@@ -1,7 +1,7 @@
 :doctype: book
 :toc:
 :author: Simon Reichenbach
-include::D:/DatenSimon/Dokumente/asciidoctor/defaults.adoc[]
+//include::/data/DatenSimon/Dokumente/asciidoctor/defaults.adoc[]
 
 = Semesterarbeit FAC: Entwicklung einer Scriptsprache
 Simon Reichenbach <simon@richebach.ch>
