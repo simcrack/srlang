@@ -18,4 +18,10 @@ public interface InstrVisitor<R> {
     public R visitScript(InstrScript instrScript);
 
     public R visitConditionalOperation(InstrConditional instrConditional);
+
+    public R visitLoopOperation(InstrLoop instrLoop);
+
+    public R visitSetFunction(InstrSetFunction instrSetFunction);
+
+    public R visitGetFunction(InstrGetFunction instrGetFunction);
 }

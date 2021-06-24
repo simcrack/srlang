@@ -2,26 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66ba2b9f-fad7-438b-b594-e1dc2abdeade" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/simon_reichenbach.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrEcho.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrInstructions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grammars/Parser.cup" beforeDir="false" afterPath="$PROJECT_DIR$/grammars/Parser.cup" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grammars/Scanner.flex" beforeDir="false" afterPath="$PROJECT_DIR$/grammars/Scanner.flex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/SkriptRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/SkriptRunner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/BinaryOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/BinaryOperator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Evaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Executor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Instruction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Instr.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstructionBinaryOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrBinaryOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstructionConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstructionGetVariable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrGetVariable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstructionNegate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrNegate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstructionScript.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstructionSetVariable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrSetVariable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstructionVisitor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Validator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Context.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Context.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Executor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Executor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrConditional.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrConditional.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Parser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Scanner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Terminals.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Terminals.java" afterDir="false" />
@@ -53,7 +43,6 @@
     <hideBySeverity>
       <option value="15" />
     </hideBySeverity>
-    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="1uLSWjfBYkxbYLnREIKgesIOg92" />
   <component name="ProjectLevelVcsManager">
@@ -80,6 +69,7 @@
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="ch.ffhs.srlang.skript.instr" />
+      <recent name="ch.ffhs.srlang.skript" />
     </key>
   </component>
   <component name="RunManager" selected="Application.SkriptRunner">
@@ -180,16 +170,31 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Executor.java</url>
-          <line>116</line>
-          <option name="timeStamp" value="12" />
+          <url>file://$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrLoop.java</url>
+          <line>13</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Executor.java</url>
+          <line>89</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="16" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ClassCastException" package="java.lang" />
+          <option name="timeStamp" value="27" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="ch.ffhs.srlang.skript.instr.InstrBinaryOperation" memberName="leftOperand" />
         <PinnedItemInfo parentTag="ch.ffhs.srlang.skript.parser.CUP$Parser$actions" memberName="parser" />
+        <PinnedItemInfo parentTag="ch.ffhs.srlang.skript.instr.InstrConstant" memberName="value" />
+        <PinnedItemInfo parentTag="ch.ffhs.srlang.skript.instr.InstrInstructions" memberName="instructions" />
       </pinned-members>
     </pin-to-top-manager>
     <watches-manager>

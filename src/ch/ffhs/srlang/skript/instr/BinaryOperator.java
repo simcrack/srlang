@@ -5,5 +5,6 @@ public enum BinaryOperator {
     SUB,
     MUL,
     DIV,
-    EQU
+    EQU,
+    LES
 }

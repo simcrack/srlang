@@ -35,7 +35,8 @@ import static ch.ffhs.srlang.skript.parser.Terminals.*;
 "*"     { return sym(kwMul); }
 "/"     { return sym(kwDiv); }
 ":="    { return sym(kwAssign); }
-"=="    { return sym(kwCompare); }
+"=="    { return sym(kwEqual); }
+"<"     { return sym(kwLess); }
 
 
 "("		{ return sym(kwRoundOpen); }
@@ -52,7 +53,7 @@ import static ch.ffhs.srlang.skript.parser.Terminals.*;
 "ret"   { return sym(kwReturn); }
 "echo"  { return sym(kwEcho); }
 
-\/\/.*\n    { return sym(comment); }
+\/\/.*\n    { }
 [0-9]+  { return symVal(literalInteger); }
 [a-zA-z][a-zA-Z0-9]{0,255} { return symVal(identifier); }
 
