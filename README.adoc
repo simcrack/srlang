@@ -1,0 +1,214 @@
+:doctype book
+:toc
+:author Simon Reichenbach
+include:/data/DatenSimon/Dokumente/asciidoctor/defaults.adoc[]
+
+= Semesterarbeit FAC Entwicklung einer Scriptsprache
+Simon Reichenbach <simon@richebach.ch>
+v1.0, 2021-06-24
+
+== Glossar
+
+[options="header",cols="1,2"]
+|===
+| Begriff | Bedeutung
+| PCRE    | https//de.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions[Perl Compatible Regular Expression]
+|===
+
+
+== Benutzung
+
+
+== Semantik
+
+=== Beispielprogramm
+
+[source,srlang]
+----
+//Globale Variablen
+r1 := 123;
+minZahl := 860;
+a= 0;
+
+//Funktion ohne Rückgabewert
+fn a1(a, bc) {
+	test := a; //Variable test und Argumente sind nur innerhalb der Funktion definiert
+	echo(a + bc + test);
+}
+
+//Funktionsaufruf
+a1(1, 2); //--> echo 4
+
+//Bedingte Anweisung
+if (r1 == 124) {
+	echo(r1); 
+} el {
+    if (true) {
+	    echo(9999);
+	}
+}
+
+//Funktion mit Rückgabe
+fn abc(a) {
+	ret(a * 2);
+}
+
+a := ((1 + r1) * 5) + abc(r1);
+
+//Schlaufe
+lp (a > minZahl) {
+	a := a - 1;
+	echo(a);
+}
+----
+
+=== Datentypen und Variablen
+Alle Variablen haben den Datentyp `BigInteger`.
+Boolsche Werte werden als `0` (falsch) und `1` (wahr) dargestellt.
+
+Variablen werden mittels dem Zuweisungsoperator `:=` definiert werden.
+Sie werden automatisch deklariert, falls sie noch nicht existieren.
+
+=== Funktionen
+Funktionsrümpfe haben eigene Unter-Namespaces (`Context`), in welchen sie ihre eigenen Variablen halten können.
+Auch die Argumente werden als normale Variablen in diesem Namespace abgelegt.
+Die Funktionen selber werden global deklariert.
+
+Am Ende des Funktionsrumpfs kann man mittels dem Befehl `ret(<Ausdruck>);` einen Rückgabewert definieren.
+
+=== Ausdrücke
+Es sind sowohl arithmetische Ausdrücke mit den Operatoren `+`, `-`, `*` und `/`, als auch boolsche Ausdrücke mit den Operatoren '==', '>' und '<' erlaubt.
+Für arithemitsche Ausdrücke gilt für die Operatorenreihenfolge die Regel "Punkt vor Strich" und auch Klammern werden unterstüzt.
+
+=== Schlaufen und Bedingte Anwisungen
+Schlaufen können mit dem Konstruklt `lp (<boolscher Ausdruck>) {<Code-Block>}` realisiert werden, bedingte Anweisungen mit `if (<boolscher Ausdruck>) {<Code-Block>} el {<Code-Block>}`.
+Der Else-Block kann weggelassen werden.
+
+=== Kommentare
+Kommentare werden mittels `//` eingeleitet und werden durch den nächsten Zeilenumbruch abgeschlossen.
+
+
+== Grammatik
+
+=== Alphabet
+Das Alphalbet der Grammatik beinhaltet folgende Zeichen (PCRE).
+
+[source,pcre]
+----
+/[a-zA-Z0-9{}(),;:=<>\/*+"-]/
+----
+
+=== Tokens
+In der folgenden Tabelle werden die vorbelegten Tokens als Reguläre Ausdrücke definiert.
+Diese werden später für die Definition der Grammatik benötigt.
+
+//Regex für Parser.cup "\| (.*?)\s*\| `/(.*)/" -> "terminal $1;\t// $2"
+.geordnete Liste von Tokens
+[options="header",cols="2,4"]
+|===
+| Terminal       | PCRE
+| literalBoolean | `/(false\|true)/`
+| literalInteger | `/[0-9]+/`
+|                | 
+| kwAdd          | `/\+/`
+| kwAssign       | `/:=/`
+| kwCompare      | `/==/`
+| kwDiv          | `/\//`
+| kwGreater      | `/>/`
+| kwLess         | `/</`
+| kwMul          | `/\*/`
+| kwSub          | `/-/`
+|                | 
+| kwRoundClose   | `/\)/`
+| kwRoundOpen    | `/\(/`
+| kwCurlyClose   | `/\}/`
+| kwCurlyOpen    | `/\{/`
+|                | 
+| kwEcho         | `/echo/`
+| kwEnd          | `/;/`
+| kwElse         | `/el/`
+| kwFunction     | `/fn/`
+| kwIf           | `/if/`
+| kwList         | `/,/`
+| kwLoop         | `/lp/`
+| kwReturn       | `/ret/`
+|                | 
+| comment        | `/\/\/.*\n/`
+| identifier     | `/[a-zA-z][a-zA-Z0-9]{0,255}/`
+|===
+
+<<<
+
+=== Produktionen	
+Kommentare, Spaces und Zeilenumbrüche werden nicht als Produktionen definiert, sondern bereits vom Scanner eliminiert.
+Dadurch wird die Implementierung des Tokenizers deutlich vereinfacht.
+
+Das Startsymbol ist `Script`
+
+[source,bnf]
+----
+SCRIPT          ::= INSTRUCTIONS
+            ;
+INSTRUCTIONS    ::=
+                | INSTRUCTIONS INSTRUCTION
+                    {:  RESULT = is;
+                        RESULT.addInstruction(i);
+                    :}
+            ;
+INSTRUCTION     ::= VAR_ASSIGN
+                | FUNCTION_DEF
+                | FUNCTION_CALL kwEnd
+                | CONDITIONAL
+                | LOOP
+                | ECHO
+            ;
+ECHO            ::= kwEcho kwRoundOpen ARIT_EXPRESSION kwRoundClose kwEnd
+            ;
+VARIABLE        ::= identifier
+            ;
+VAR_ASSIGN      ::= VARIABLE kwAssign ARIT_EXPRESSION kwEnd
+            ;
+ARIT_EXPRESSION ::= FUNCTION_CALL
+                | kwRoundOpen ARIT_EXPRESSION kwRoundClose
+                | literalInteger
+                | VARIABLE
+                | ARIT_EXPRESSION kwAdd ARIT_EXPRESSION
+                | ARIT_EXPRESSION kwSub ARIT_EXPRESSION
+                | ARIT_EXPRESSION kwMul ARIT_EXPRESSION
+                | ARIT_EXPRESSION kwDiv ARIT_EXPRESSION
+            ;
+BOOL_EXPRESSION ::= ARIT_EXPRESSION kwEqual ARIT_EXPRESSION
+                | ARIT_EXPRESSION kwLess ARIT_EXPRESSION
+                | ARIT_EXPRESSION kwGreater ARIT_EXPRESSION
+                | literalBoolean
+            ;
+ARGUMENT_DEF    ::= VARIABLE
+                | ARGUMENT_DEF kwList VARIABLE
+                    {:  ad.add(v);
+                        RESULT = ad;
+                    :}
+
+            ;
+ARGUMENT_LIST    ::= ARIT_EXPRESSION
+                | ARGUMENT_LIST kwList ARIT_EXPRESSION
+                    {:  al.add(ae);
+                        RESULT = al;
+                    :}
+            ;
+FUNCTION_NAME    ::= identifier
+                    
+            ;
+FUNCTION_DEF    ::= kwFunction FUNCTION_NAME kwRoundOpen kwRoundClose kwCurlyOpen INSTRUCTIONS kwCurlyClose
+                | kwFunction FUNCTION_NAME kwRoundOpen ARGUMENT_DEF kwRoundClose kwCurlyOpen INSTRUCTIONS kwCurlyClose
+                | kwFunction FUNCTION_NAME kwRoundOpen kwRoundClose kwCurlyOpen INSTRUCTIONS kwReturn kwRoundOpen ARIT_EXPRESSION kwRoundClose kwEnd kwCurlyClose
+                | kwFunction FUNCTION_NAME kwRoundOpen ARGUMENT_DEF kwRoundClose kwCurlyOpen INSTRUCTIONS kwReturn kwRoundOpen ARIT_EXPRESSION kwRoundClose kwEnd kwCurlyClose
+            ;
+FUNCTION_CALL    ::= FUNCTION_NAME kwRoundOpen ARGUMENT_LIST kwRoundClose
+                | FUNCTION_NAME kwRoundOpen kwRoundClose
+            ;
+CONDITIONAL     ::= kwIf kwRoundOpen BOOL_EXPRESSION kwRoundClose kwCurlyOpen INSTRUCTIONS kwCurlyClose
+                | kwIf kwRoundOpen BOOL_EXPRESSION kwRoundClose kwCurlyOpen INSTRUCTIONS kwCurlyClose kwElse kwCurlyOpen INSTRUCTIONS kwCurlyClose
+            ;
+LOOP            ::= kwLoop kwRoundOpen BOOL_EXPRESSION kwRoundClose kwCurlyOpen INSTRUCTIONS kwCurlyClose
+            ;
+----

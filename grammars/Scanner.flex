@@ -54,8 +54,8 @@ import static ch.richebach.srlang.parser.Terminals.*;
 "echo"  { return sym(kwEcho); }
 
 (true|false)  { return symVal(literalBoolean); }
-\/\/.*\n    { }
 [0-9]+  { return symVal(literalInteger); }
+\/\/.*\n    { }
 [a-zA-z][a-zA-Z0-9]{0,255} { return symVal(identifier); }
 
 [\n\r]+ { }

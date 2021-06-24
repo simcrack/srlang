@@ -37,7 +37,7 @@ public class Interpreter {
     }
 
     private static void printUsage() {
-        System.out.println("Usage: Interpreter FILE\n"
+        System.out.println("Usage: srlang FILE\n"
                 + "Runs a script file which is written in srlang scripting language.");
     }
 }

@@ -7,30 +7,30 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-terminal String literalInteger;	// [-+]{0,1}[0-9]+
-terminal String literalBoolean;	// (true|false)
+terminal String literalInteger;    // [-+]{0,1}[0-9]+
+terminal String literalBoolean;    // (true|false)
 
-terminal kwAdd;	// \+
-terminal kwAssign;	// :=
-terminal kwEqual;	// ==
+terminal kwAdd;    // \+
+terminal kwAssign;    // :=
+terminal kwEqual;    // ==
 terminal kwLess; //<
 terminal kwGreater; //>
-terminal kwCurlyClose;	// \}
-terminal kwCurlyOpen;	// \{
-terminal kwDiv;	// \/
-terminal kwList;	// ,
-terminal kwMul;	// \*
-terminal kwRoundClose;	// \)
-terminal kwRoundOpen;	// \(
-terminal kwSub;	// -
-terminal kwEnd;	// ;
-terminal kwElse;	// el
-terminal kwFunction;	// fn
-terminal kwIf;	// if
-terminal kwLoop;	// lp
-terminal kwReturn;	// ret
+terminal kwCurlyClose;    // \}
+terminal kwCurlyOpen;    // \{
+terminal kwDiv;    // \/
+terminal kwList;    // ,
+terminal kwMul;    // \*
+terminal kwRoundClose;    // \)
+terminal kwRoundOpen;    // \(
+terminal kwSub;    // -
+terminal kwEnd;    // ;
+terminal kwElse;    // el
+terminal kwFunction;    // fn
+terminal kwIf;    // if
+terminal kwLoop;    // lp
+terminal kwReturn;    // ret
 terminal kwEcho; // echo
-terminal String identifier;	// [a-zA-z][a-zA-Z0-9]{0,255}
+terminal String identifier;    // [a-zA-z][a-zA-Z0-9]{0,255}
 
 
 non terminal String VARIABLE;
@@ -58,50 +58,50 @@ start with SCRIPT;
 SCRIPT          ::= INSTRUCTIONS:is
                     {: RESULT = new InstrScript(is); :}
             ;
-INSTRUCTIONS	::=
+INSTRUCTIONS    ::=
                     {:  RESULT = new InstrInstructions(); :}
                 | INSTRUCTIONS:is INSTRUCTION:i
                     {:  RESULT = is;
                         RESULT.addInstruction(i);
                     :}
-			;
+            ;
 INSTRUCTION     ::= VAR_ASSIGN:va
                     {: RESULT = va; :}
-				| FUNCTION_DEF:fd
-				    {: RESULT = fd; :}
-				| FUNCTION_CALL:fc kwEnd
-				    {: RESULT = fc; :}
-				| CONDITIONAL:c
-				    {: RESULT = c; :}
-				| LOOP:l
-				    {: RESULT = l; :}
-				| ECHO:e
-				    {: RESULT = e; :}
-			;
+                | FUNCTION_DEF:fd
+                    {: RESULT = fd; :}
+                | FUNCTION_CALL:fc kwEnd
+                    {: RESULT = fc; :}
+                | CONDITIONAL:c
+                    {: RESULT = c; :}
+                | LOOP:l
+                    {: RESULT = l; :}
+                | ECHO:e
+                    {: RESULT = e; :}
+            ;
 ECHO            ::= kwEcho kwRoundOpen ARIT_EXPRESSION:ae kwRoundClose kwEnd
                     {: RESULT = new InstrEcho(ae); :}
             ;
-VARIABLE		::= identifier:i
+VARIABLE        ::= identifier:i
                     {: RESULT = i; :}
-			;
-VAR_ASSIGN	    ::= VARIABLE:v kwAssign ARIT_EXPRESSION:ae kwEnd
+            ;
+VAR_ASSIGN        ::= VARIABLE:v kwAssign ARIT_EXPRESSION:ae kwEnd
                     {: RESULT = new InstrSetVariable(v, ae); :}
-			;
+            ;
 ARIT_EXPRESSION ::= FUNCTION_CALL:fc
                     {: RESULT = fc; :}
                 | kwRoundOpen ARIT_EXPRESSION:ae kwRoundClose
                     {: RESULT = ae; :}
-				| literalInteger:li
-				    {: RESULT = InstrConstant.fromString(li); :}
-				| VARIABLE:v
-				    {: RESULT = new InstrGetVariable(v); :}
-				| ARIT_EXPRESSION:ael kwAdd ARIT_EXPRESSION:aer
+                | literalInteger:li
+                    {: RESULT = InstrConstant.fromString(li); :}
+                | VARIABLE:v
+                    {: RESULT = new InstrGetVariable(v); :}
+                | ARIT_EXPRESSION:ael kwAdd ARIT_EXPRESSION:aer
                     {: RESULT = new InstrBinExpression(BinOperator.ADD, ael, aer); :}
                 | ARIT_EXPRESSION:ael kwSub ARIT_EXPRESSION:aer
                     {: RESULT = new InstrBinExpression(BinOperator.SUB, ael, aer); :}
                 | ARIT_EXPRESSION:ael kwMul ARIT_EXPRESSION:aer
                     {: RESULT = new InstrBinExpression(BinOperator.MUL, ael, aer); :}
-				| ARIT_EXPRESSION:ael kwDiv ARIT_EXPRESSION:aer
+                | ARIT_EXPRESSION:ael kwDiv ARIT_EXPRESSION:aer
                     {: RESULT = new InstrBinExpression(BinOperator.DIV, ael, aer); :}
             ;
 BOOL_EXPRESSION ::= ARIT_EXPRESSION:ael kwEqual ARIT_EXPRESSION:aer
@@ -113,26 +113,26 @@ BOOL_EXPRESSION ::= ARIT_EXPRESSION:ael kwEqual ARIT_EXPRESSION:aer
                 | literalBoolean:lb
                     {: RESULT = InstrConstant.fromString(lb); :}
             ;
-ARGUMENT_DEF	::= VARIABLE:v
+ARGUMENT_DEF    ::= VARIABLE:v
                     {: RESULT = new ArrayList<String>(Arrays.asList(v)); :}
-				| ARGUMENT_DEF:ad kwList VARIABLE:v
-				    {:  ad.add(v);
-				        RESULT = ad;
-				    :}
+                | ARGUMENT_DEF:ad kwList VARIABLE:v
+                    {:  ad.add(v);
+                        RESULT = ad;
+                    :}
 
-			;
-ARGUMENT_LIST	::= ARIT_EXPRESSION:ae
+            ;
+ARGUMENT_LIST    ::= ARIT_EXPRESSION:ae
                     {: RESULT = new ArgList(ae); :}
-				| ARGUMENT_LIST:al kwList ARIT_EXPRESSION:ae
+                | ARGUMENT_LIST:al kwList ARIT_EXPRESSION:ae
                     {:  al.add(ae);
                         RESULT = al;
                     :}
-			;
-FUNCTION_NAME	::= identifier:s
+            ;
+FUNCTION_NAME    ::= identifier:s
                     {: RESULT = s; :}
                     
-			;
-FUNCTION_DEF	::= kwFunction FUNCTION_NAME:fn kwRoundOpen kwRoundClose kwCurlyOpen INSTRUCTIONS:is kwCurlyClose
+            ;
+FUNCTION_DEF    ::= kwFunction FUNCTION_NAME:fn kwRoundOpen kwRoundClose kwCurlyOpen INSTRUCTIONS:is kwCurlyClose
                     {: RESULT = new InstrSetFunction(fn, is); :}
                 | kwFunction FUNCTION_NAME:fn kwRoundOpen ARGUMENT_DEF:ad kwRoundClose kwCurlyOpen INSTRUCTIONS:is kwCurlyClose
                     {: RESULT = new InstrSetFunction(fn, ad, is); :}
@@ -140,17 +140,17 @@ FUNCTION_DEF	::= kwFunction FUNCTION_NAME:fn kwRoundOpen kwRoundClose kwCurlyOpe
                     {: RESULT = new InstrSetFunction(fn, is, ae); :}
                 | kwFunction FUNCTION_NAME:fn kwRoundOpen ARGUMENT_DEF:ad kwRoundClose kwCurlyOpen INSTRUCTIONS:is kwReturn kwRoundOpen ARIT_EXPRESSION:ae kwRoundClose kwEnd kwCurlyClose
                     {: RESULT = new InstrSetFunction(fn, ad, is, ae); :}
-			;
-FUNCTION_CALL	::= FUNCTION_NAME:fn kwRoundOpen ARGUMENT_LIST:al kwRoundClose
+            ;
+FUNCTION_CALL    ::= FUNCTION_NAME:fn kwRoundOpen ARGUMENT_LIST:al kwRoundClose
                     {: RESULT = new InstrGetFunction(fn, al); :}
                 | FUNCTION_NAME:fn kwRoundOpen kwRoundClose
                     {: RESULT = new InstrGetFunction(fn); :}
-			;
-CONDITIONAL		::= kwIf kwRoundOpen BOOL_EXPRESSION:be kwRoundClose kwCurlyOpen INSTRUCTIONS:ist kwCurlyClose
+            ;
+CONDITIONAL        ::= kwIf kwRoundOpen BOOL_EXPRESSION:be kwRoundClose kwCurlyOpen INSTRUCTIONS:ist kwCurlyClose
                     {: RESULT = new InstrConditional(be, ist); :}
                 | kwIf kwRoundOpen BOOL_EXPRESSION:be kwRoundClose kwCurlyOpen INSTRUCTIONS:ist kwCurlyClose kwElse kwCurlyOpen INSTRUCTIONS:isf kwCurlyClose
                     {: RESULT = new InstrConditional(be, ist, isf); :}
-			;
-LOOP			::= kwLoop kwRoundOpen BOOL_EXPRESSION:be kwRoundClose kwCurlyOpen INSTRUCTIONS:is kwCurlyClose
+            ;
+LOOP            ::= kwLoop kwRoundOpen BOOL_EXPRESSION:be kwRoundClose kwCurlyOpen INSTRUCTIONS:is kwCurlyClose
                     {: RESULT = new InstrLoop(be, is); :}
-			;
+            ;
