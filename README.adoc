@@ -1,9 +1,9 @@
-:doctype book
-:toc
-:author Simon Reichenbach
-include:/data/DatenSimon/Dokumente/asciidoctor/defaults.adoc[]
+:doctype: book
+:toc:
+:author: Simon Reichenbach
+include::D:/DatenSimon/Dokumente/asciidoctor/defaults.adoc[]
 
-= Semesterarbeit FAC Entwicklung einer Scriptsprache
+= Semesterarbeit FAC: Entwicklung einer Scriptsprache
 Simon Reichenbach <simon@richebach.ch>
 v1.0, 2021-06-24
 
@@ -18,6 +18,18 @@ v1.0, 2021-06-24
 
 == Benutzung
 
+=== Installation
+Source und Binaries sind auf Github erhältlich:
+
+* Source: https://github.com/simcrack/srlang
+* Binaries: https://github.com/simcrack/srlang/releases/tag/0.1
+
+=== Benutzung
+
+[source,sh]
+----
+java -jar srlang.jar test.srlang
+----
 
 == Semantik
 

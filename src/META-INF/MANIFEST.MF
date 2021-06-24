@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: Interpreter
+Main-Class: ch.richebach.srlang.Interpreter
 

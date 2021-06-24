@@ -7,12 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66ba2b9f-fad7-438b-b594-e1dc2abdeade" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/semesterarbeit.adoc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/grammars/Parser.cup" beforeDir="false" afterPath="$PROJECT_DIR$/grammars/Parser.cup" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grammars/Scanner.flex" beforeDir="false" afterPath="$PROJECT_DIR$/grammars/Scanner.flex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/richebach/srlang/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/README.adoc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
