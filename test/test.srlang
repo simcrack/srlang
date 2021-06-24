@@ -1,0 +1,46 @@
+//Test-Script
+//Erwarteter Output
+//  4
+//  9999
+//  865
+//  864
+//  863
+//  862
+//  861
+//  860
+
+//Globale Variablen
+r1 := 123;
+minZahl := 860;
+a:= 0;
+
+//Funktion ohne Rückgabewert
+fn a1(a, bc) {
+	test := a; //Variable test und Argumente sind nur innerhalb der Funktion definiert
+	echo(a + bc + test);
+}
+
+//Funktionsaufruf
+a1(1, 2); //--> echo 4
+
+//Bedingte Anweisung
+if (r1 == 124) {
+	echo(r1); 
+} el {
+    if (true) {
+	    echo(9999);
+	}
+}
+
+//Funktion mit Rückgabe
+fn abc(a) {
+	ret(a * 2);
+}
+
+a := ((1 + r1) * 5) + abc(r1);
+
+//Schlaufe
+lp (a > minZahl) {
+	a := a - 1;
+	echo(a);
+}

@@ -3,18 +3,36 @@
   <component name="ChangeListManager">
     <list default="true" id="66ba2b9f-fad7-438b-b594-e1dc2abdeade" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build_all.bat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/grammars/Parser.cup" beforeDir="false" afterPath="$PROJECT_DIR$/grammars/Parser.cup" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grammars/Scanner.flex" beforeDir="false" afterPath="$PROJECT_DIR$/grammars/Scanner.flex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/SkriptRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/SkriptRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/BinaryOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/BinaryOperator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Context.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Context.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Executor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Executor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrConditional.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrConditional.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Scanner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Terminals.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Terminals.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/build_all.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/cup_build.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/jflex_build.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/SkriptRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/ArgList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/ArgList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/BinaryOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/BinOperator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Context.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/Context.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/ElementDoesNotExistException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/ElementDoesNotExistException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Executor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/Executor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Function.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/Function.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Instr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/Instr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrBinaryOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrBinExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrConditional.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrConditional.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrEcho.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrEcho.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrGetFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrGetFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrGetVariable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrGetVariable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrInstructions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrInstructions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrLoop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrLoop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrNegate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrScript.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrScript.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrSetFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrSetFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrSetVariable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrSetVariable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/parser/Scanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ch/ffhs/srlang/skript/parser/Terminals.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ch/richebach/srlang/parser/Terminals.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,14 +86,16 @@
       <recent name="ch.ffhs.ti.umk.skript.parser" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="ch.richebach.srlang.instr" />
       <recent name="ch.ffhs.srlang.skript.instr" />
       <recent name="ch.ffhs.srlang.skript" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.SkriptRunner">
-    <configuration name="SkriptRunner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ch.ffhs.srlang.skript.SkriptRunner" />
+  <component name="RunManager" selected="Application.SRLang">
+    <configuration name="SRLang" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="ch.richebach.srlang.Interpreter" />
       <module name="srlang" />
+      <option name="PROGRAM_PARAMETERS" value="test/test.srlang" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="ch.ffhs.srlang.skript.*" />
@@ -101,45 +121,13 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="cup_build" type="ShConfigurationType">
-      <option name="SCRIPT_TEXT" value="" />
-      <option name="INDEPENDENT_SCRIPT_PATH" value="false" />
-      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/scripts/cup_build.bat" />
-      <option name="SCRIPT_OPTIONS" value="" />
-      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="false" />
-      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/" />
-      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
-      <option name="INTERPRETER_PATH" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="EXECUTE_IN_TERMINAL" value="true" />
-      <option name="EXECUTE_SCRIPT_FILE" value="true" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <configuration name="jflex_build" type="ShConfigurationType">
-      <option name="SCRIPT_TEXT" value="" />
-      <option name="INDEPENDENT_SCRIPT_PATH" value="false" />
-      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/scripts/jflex_build.bat" />
-      <option name="SCRIPT_OPTIONS" value="" />
-      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="false" />
-      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/" />
-      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
-      <option name="INTERPRETER_PATH" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="EXECUTE_IN_TERMINAL" value="true" />
-      <option name="EXECUTE_SCRIPT_FILE" value="true" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="Application.SkriptRunner" />
-      <item itemvalue="Shell Script.cup_build" />
+      <item itemvalue="Application.SRLang" />
       <item itemvalue="Shell Script.build_all" />
-      <item itemvalue="Shell Script.jflex_build" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SkriptRunner" />
+        <item itemvalue="Application.SRLang" />
       </list>
     </recent_temporary>
   </component>
@@ -169,16 +157,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/InstrLoop.java</url>
-          <line>13</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ch/ffhs/srlang/skript/instr/Executor.java</url>
-          <line>89</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="16" />
@@ -187,6 +165,20 @@
           <properties class="java.lang.ClassCastException" package="java.lang" />
           <option name="timeStamp" value="27" />
         </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.UnsupportedOperationException" package="java.lang" />
+          <option name="timeStamp" value="36" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ch/richebach/srlang/parser/Parser.java</url>
+          <line>468</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ch/richebach/srlang/instr/InstrConstant.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>

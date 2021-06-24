@@ -1,16 +1,20 @@
-package ch.ffhs.srlang.skript.parser;
+package ch.richebach.srlang.parser;
 
-import ch.ffhs.srlang.skript.instr.*;
+import ch.richebach.srlang.instr.*;
+import ch.richebach.srlang.BinOperator;
+import ch.richebach.srlang.ArgList;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 terminal String literalInteger;	// [-+]{0,1}[0-9]+
+terminal String literalBoolean;	// (true|false)
 
 terminal kwAdd;	// \+
 terminal kwAssign;	// :=
 terminal kwEqual;	// ==
 terminal kwLess; //<
+terminal kwGreater; //>
 terminal kwCurlyClose;	// \}
 terminal kwCurlyOpen;	// \{
 terminal kwDiv;	// \/
@@ -19,7 +23,6 @@ terminal kwMul;	// \*
 terminal kwRoundClose;	// \)
 terminal kwRoundOpen;	// \(
 terminal kwSub;	// -
-
 terminal kwEnd;	// ;
 terminal kwElse;	// el
 terminal kwFunction;	// fn
@@ -75,7 +78,7 @@ INSTRUCTION     ::= VAR_ASSIGN:va
 				| ECHO:e
 				    {: RESULT = e; :}
 			;
-ECHO            ::= kwEcho ARIT_EXPRESSION:ae kwEnd
+ECHO            ::= kwEcho kwRoundOpen ARIT_EXPRESSION:ae kwRoundClose kwEnd
                     {: RESULT = new InstrEcho(ae); :}
             ;
 VARIABLE		::= identifier:i
@@ -93,23 +96,29 @@ ARIT_EXPRESSION ::= FUNCTION_CALL:fc
 				| VARIABLE:v
 				    {: RESULT = new InstrGetVariable(v); :}
 				| ARIT_EXPRESSION:ael kwAdd ARIT_EXPRESSION:aer
-                    {: RESULT = new InstrBinaryOperation(BinaryOperator.ADD, ael, aer); :}
+                    {: RESULT = new InstrBinExpression(BinOperator.ADD, ael, aer); :}
                 | ARIT_EXPRESSION:ael kwSub ARIT_EXPRESSION:aer
-                    {: RESULT = new InstrBinaryOperation(BinaryOperator.SUB, ael, aer); :}
+                    {: RESULT = new InstrBinExpression(BinOperator.SUB, ael, aer); :}
                 | ARIT_EXPRESSION:ael kwMul ARIT_EXPRESSION:aer
-                    {: RESULT = new InstrBinaryOperation(BinaryOperator.MUL, ael, aer); :}
+                    {: RESULT = new InstrBinExpression(BinOperator.MUL, ael, aer); :}
 				| ARIT_EXPRESSION:ael kwDiv ARIT_EXPRESSION:aer
-                    {: RESULT = new InstrBinaryOperation(BinaryOperator.DIV, ael, aer); :}
+                    {: RESULT = new InstrBinExpression(BinOperator.DIV, ael, aer); :}
             ;
 BOOL_EXPRESSION ::= ARIT_EXPRESSION:ael kwEqual ARIT_EXPRESSION:aer
-                    {: RESULT = new InstrBinaryOperation(BinaryOperator.EQU, ael, aer); :}
+                    {: RESULT = new InstrBinExpression(BinOperator.EQU, ael, aer); :}
                 | ARIT_EXPRESSION:ael kwLess ARIT_EXPRESSION:aer
-                    {: RESULT = new InstrBinaryOperation(BinaryOperator.LES, ael, aer); :}
+                    {: RESULT = new InstrBinExpression(BinOperator.LES, ael, aer); :}
+                | ARIT_EXPRESSION:ael kwGreater ARIT_EXPRESSION:aer
+                    {: RESULT = new InstrBinExpression(BinOperator.GTR, ael, aer); :}
+                | literalBoolean:lb
+                    {: RESULT = InstrConstant.fromString(lb); :}
             ;
 ARGUMENT_DEF	::= VARIABLE:v
-                    {: RESULT = Arrays.asList(v); :}
+                    {: RESULT = new ArrayList<String>(Arrays.asList(v)); :}
 				| ARGUMENT_DEF:ad kwList VARIABLE:v
-				    {: ad.add(v); RESULT = ad; :}
+				    {:  ad.add(v);
+				        RESULT = ad;
+				    :}
 
 			;
 ARGUMENT_LIST	::= ARIT_EXPRESSION:ae
